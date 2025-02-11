@@ -3,7 +3,9 @@ package com.ferhatozcelik.codechallenge.di
 import android.app.Application
 import androidx.room.Room
 import com.ferhatozcelik.codechallenge.data.dao.ExampleDao
+import com.ferhatozcelik.codechallenge.data.dao.RecipeDao
 import com.ferhatozcelik.codechallenge.data.dao.UserDao
+import com.ferhatozcelik.codechallenge.data.entity.Recipe
 import com.ferhatozcelik.codechallenge.data.local.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -29,5 +31,10 @@ object DatabaseModule {
     @Provides
     fun provideUserDao(database: AppDatabase): UserDao {
         return database.getUserDao()
+    }
+
+    @Provides
+    fun provideRecipeDao(database: AppDatabase): RecipeDao {
+        return database.getRecipeDao()
     }
 }
