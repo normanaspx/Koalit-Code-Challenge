@@ -14,15 +14,19 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.ferhatozcelik.codechallenge.data.entity.Recipe
+import com.ferhatozcelik.codechallenge.ui.home.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen() {
+fun DetailScreen(recipeId: Int, viewModel: DetailViewModel = hiltViewModel()) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var prepTime by remember { mutableStateOf("") // Usamos String para el tiempo de preparación
-    }
+    var prepTime by remember { mutableStateOf("") }
     var isFavorite by remember { mutableStateOf(false) }
+    var recipe by remember { mutableStateOf<Recipe?>(null) }
+
 
     Column(
         modifier = Modifier
@@ -42,7 +46,7 @@ fun DetailScreen() {
         OutlinedTextField(
             value = title,
             onValueChange = { title = it },
-            label = { Text("Título de la receta") },
+            label = { Text(recipe!!.title) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
@@ -84,9 +88,13 @@ fun DetailScreen() {
         // Botón para guardar la receta
         Button(
             onClick = {
-                // Acción para guardar la receta
-                // Puedes manejar el guardado en una base de datos o similar
-                println("Receta guardada: $title, Favorita: $isFavorite")
+                val recipe = Recipe(
+                    title = title,
+                    prepTime =  prepTime.toInt(),
+                    isFavorite =  isFavorite,
+                    imageResId =  null
+                )
+                viewModel.createRecipe(recipe = recipe)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -94,11 +102,4 @@ fun DetailScreen() {
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun RecipeInputScreenPreview() {
-    DetailScreen()
-}
-
 

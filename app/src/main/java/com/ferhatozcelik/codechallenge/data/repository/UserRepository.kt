@@ -11,7 +11,6 @@ class UserRepository @Inject constructor(private val userDao: UserDao) {
     suspend fun getUserByEmail(email: String, password: String) = userDao.getUserByEmail(email, password)
 
     suspend fun insertUser(username: String, password: String) {
-        val user = User(id = 1, email= username, password = password)
-        userDao.insertUser(user)
+        userDao.insertUser(User(id = 1, email= username, password = password))
     }
 }

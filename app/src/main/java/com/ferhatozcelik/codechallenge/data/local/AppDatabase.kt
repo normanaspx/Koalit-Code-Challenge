@@ -20,7 +20,7 @@ import javax.inject.Provider
         User::class,
         Recipe::class
                ],
-    version = 3)
+    version = 4)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

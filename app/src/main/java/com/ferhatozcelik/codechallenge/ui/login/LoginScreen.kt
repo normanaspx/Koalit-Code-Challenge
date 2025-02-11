@@ -31,7 +31,7 @@ import com.ferhatozcelik.codechallenge.ui.home.HomeViewModel
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
+    viewModel: LoginViewModel = hiltViewModel(),
     navController: NavHostController,
     sessionManager: UserSessionManager
 ) {

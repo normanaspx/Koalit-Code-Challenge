@@ -1,4 +1,4 @@
-package com.ferhatozcelik.codechallenge.ui.activitys
+package com.ferhatozcelik.codechallenge.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
