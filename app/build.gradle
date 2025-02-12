@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.material3)
     implementation libs.androidx.material3
     implementation libs.androidx.runtime.livedata
+    implementation libs.coil.compose
 
     // JUnit
     testImplementation(libs.junit)

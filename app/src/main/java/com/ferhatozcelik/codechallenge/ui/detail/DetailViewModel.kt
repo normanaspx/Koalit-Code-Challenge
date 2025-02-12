@@ -16,16 +16,16 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(private val recipeRepository: RecipeRepository) : ViewModel() {
 
     private val _selectedRecipe = MutableLiveData<Recipe?>()
+    val allRecipes: LiveData<List<Recipe>> = recipeRepository.getAllRecipes()
     val selectedRecipe: LiveData<Recipe?> = _selectedRecipe
+
+    fun setSelectedRecipe(recipe: Recipe) {
+        _selectedRecipe.value = recipe
+    }
+
     fun createRecipe(recipe: Recipe) {
         viewModelScope.launch {
             recipeRepository.insert(recipe)
-        }
-    }
-
-    fun loadRecipeById(id: Int) {
-        viewModelScope.launch {
-            _selectedRecipe.postValue(recipeRepository.getRecipeById(id))
         }
     }
 }

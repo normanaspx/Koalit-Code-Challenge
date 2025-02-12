@@ -19,14 +19,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.ferhatozcelik.codechallenge.data.entity.Recipe
+import com.ferhatozcelik.codechallenge.navigation.Screen
+import com.ferhatozcelik.codechallenge.ui.detail.DetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel(),) {
-
+fun MainScreen(navController: NavHostController, viewModel: DetailViewModel) {
     val recipes by viewModel.allRecipes.observeAsState(emptyList())
     Scaffold(
         topBar = {
@@ -45,7 +45,8 @@ fun MainScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
         ) {
             items(recipes) { recipe ->
                 RecipeCard(recipe) {
-                    navController.navigate("detail/${recipe.id}")
+                    viewModel.setSelectedRecipe(recipe)
+                    navController.navigate(Screen.Detail.route)
                 }
             }
         }

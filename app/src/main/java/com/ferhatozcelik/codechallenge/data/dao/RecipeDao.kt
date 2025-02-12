@@ -18,6 +18,6 @@ interface RecipeDao {
     fun getAllRecipes(): LiveData<List<Recipe>>
 
     @Query("SELECT * FROM recipe WHERE id = :id")
-    suspend fun getRecipeById(id: Int): Recipe?
+    fun getRecipeById(id: Int): LiveData<Recipe?>
 
 }

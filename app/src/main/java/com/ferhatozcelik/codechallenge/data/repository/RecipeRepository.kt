@@ -11,7 +11,7 @@ class RecipeRepository @Inject constructor(private val recipeDao: RecipeDao) {
     suspend fun insert(recipe: Recipe) {
         recipeDao.insert(recipe)
     }
-    suspend fun getRecipeById(id: Int): Recipe? {
+    suspend fun getRecipeById(id: Int): LiveData<Recipe?> {
         return recipeDao.getRecipeById(id) // Llamada síncrona (No es suspend)
     }
 

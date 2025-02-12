@@ -25,7 +25,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.ferhatozcelik.codechallenge.data.local.UserSessionManager
 import com.ferhatozcelik.codechallenge.navigation.Screen
-import com.ferhatozcelik.codechallenge.ui.home.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
