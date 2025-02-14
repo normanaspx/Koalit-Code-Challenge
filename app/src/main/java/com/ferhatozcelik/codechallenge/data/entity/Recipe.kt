@@ -1,5 +1,6 @@
 package com.ferhatozcelik.codechallenge.data.entity
 
+import android.net.Uri
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,5 +13,5 @@ data class Recipe(
     val title: String,
     val prepTime: Int,
     val isFavorite: Boolean,
-    val imageResId: Int? = null
+    val imageUri: String?
 ) : Parcelable

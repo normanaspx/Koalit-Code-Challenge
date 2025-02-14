@@ -6,11 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.remember
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.ferhatozcelik.codechallenge.data.local.UserSessionManager
 import com.ferhatozcelik.codechallenge.navigation.NavGraph
-import com.ferhatozcelik.codechallenge.ui.detail.DetailViewModel
 import com.ferhatozcelik.codechallenge.ui.theme.MyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +21,7 @@ class MainActivity : ComponentActivity() {
             MyApplicationTheme {
                 val navController = rememberNavController()
                 Surface(color = MaterialTheme.colorScheme.background) {
-                    NavGraph(navController = navController)
+                    NavGraph(navController = navController, sessionManager)
                 }
             }
         }

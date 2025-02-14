@@ -1,6 +1,5 @@
-package com.ferhatozcelik.codechallenge.ui.home
+package com.ferhatozcelik.codechallenge.ui.recipe_list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,24 +14,23 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.ferhatozcelik.codechallenge.data.entity.Recipe
 import com.ferhatozcelik.codechallenge.navigation.Screen
-import com.ferhatozcelik.codechallenge.ui.detail.DetailViewModel
+import com.ferhatozcelik.codechallenge.ui.recipe_add.RecipelViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavHostController, viewModel: DetailViewModel) {
+fun RecipeListScreen(navController: NavHostController, viewModel: RecipelViewModel) {
     val recipes by viewModel.allRecipes.observeAsState(emptyList())
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Lista de Recetas", style = MaterialTheme.typography.headlineMedium) },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
+                title = { Text("Lista de Recetas", style = MaterialTheme.typography.headlineMedium) }
             )
         },
         modifier = Modifier.fillMaxSize()
@@ -46,7 +44,7 @@ fun MainScreen(navController: NavHostController, viewModel: DetailViewModel) {
             items(recipes) { recipe ->
                 RecipeCard(recipe) {
                     viewModel.setSelectedRecipe(recipe)
-                    navController.navigate(Screen.Detail.route)
+                    navController.navigate(Screen.RecipeDetail.route)
                 }
             }
         }
@@ -70,10 +68,10 @@ fun RecipeCard(recipe: Recipe, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Imagen de la receta (si existe)
-            recipe.imageResId?.let {
-                Image(
-                    painter = painterResource(id = it),
-                    contentDescription = "Imagen de la receta",
+            recipe.imageUri?.let {
+                AsyncImage(
+                    model = it,
+                    contentDescription = "Imagen desde URI",
                     modifier = Modifier
                         .size(80.dp)
                         .padding(end = 16.dp)
@@ -113,9 +111,9 @@ fun RecipeCard(recipe: Recipe, onClick: () -> Unit) {
 @Composable
 fun PreviewRecipeListScreen() {
     val recipes = listOf(
-        Recipe(2,"Pizza Casera", 40, true, android.R.drawable.ic_menu_camera),
-        Recipe(3,"Ensalada César", 15, false, android.R.drawable.ic_menu_gallery),
-        Recipe(4,"Sopa de Tomate", 25, true) // Sin imagen
+        Recipe(2,"Pizza Casera", 40, true, null),
+        Recipe(3,"Ensalada César", 15, false, null),
+        Recipe(4,"Sopa de Tomate", 25, true, null) // Sin imagen
     )
-    //MainScreen(recipes, navController)
+    //HomeScreen(recipes, navController)
 }

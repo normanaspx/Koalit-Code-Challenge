@@ -3,10 +3,8 @@ package com.ferhatozcelik.codechallenge.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.ferhatozcelik.codechallenge.data.dao.ExampleDao
 import com.ferhatozcelik.codechallenge.data.dao.RecipeDao
 import com.ferhatozcelik.codechallenge.data.dao.UserDao
-import com.ferhatozcelik.codechallenge.data.entity.ExampleEntity
 import com.ferhatozcelik.codechallenge.data.entity.Recipe
 import com.ferhatozcelik.codechallenge.data.entity.User
 import com.ferhatozcelik.codechallenge.di.ApplicationScope
@@ -20,7 +18,7 @@ import javax.inject.Provider
         User::class,
         Recipe::class
                ],
-    version = 4)
+    version = 5)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

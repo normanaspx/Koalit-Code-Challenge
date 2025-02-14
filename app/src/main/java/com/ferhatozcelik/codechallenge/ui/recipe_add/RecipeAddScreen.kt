@@ -1,9 +1,9 @@
-package com.ferhatozcelik.codechallenge.ui.detail
+package com.ferhatozcelik.codechallenge.ui.recipe_add
 
 import android.net.Uri
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,26 +15,24 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberImagePainter
 import com.ferhatozcelik.codechallenge.data.entity.Recipe
+import com.ferhatozcelik.codechallenge.ext.saveToStorage
+import java.io.File
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(viewModel: DetailViewModel) {
+fun RecipeAddScreen(viewModel: RecipelViewModel) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var prepTime by remember { mutableStateOf("") }
     var isFavorite by remember { mutableStateOf(false) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
-    val recipe by viewModel.selectedRecipe.observeAsState()
-    val recipes by viewModel.allRecipes.observeAsState(emptyList())
 
-    // Lógica para seleccionar una imagen desde la galería
-    val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri: Uri? ->
@@ -136,8 +134,9 @@ fun DetailScreen(viewModel: DetailViewModel) {
                             title = title,
                             prepTime = prepTime.toInt(),
                             isFavorite = isFavorite,
-                            imageUri = imageUri // Guardamos la URI de la imagen
+                            imageUri = imageUri.toString() // Guardamos la URI de la imagen
                         )
+                        imageUri?.saveToStorage()
                         viewModel.createRecipe(recipe = recipe)
                     },
                     modifier = Modifier.fillMaxWidth()

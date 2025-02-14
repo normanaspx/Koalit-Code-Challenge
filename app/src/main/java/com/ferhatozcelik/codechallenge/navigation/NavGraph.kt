@@ -6,9 +6,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ferhatozcelik.codechallenge.data.local.UserSessionManager
-import com.ferhatozcelik.codechallenge.ui.detail.DetailScreen
-import com.ferhatozcelik.codechallenge.ui.detail.DetailViewModel
-import com.ferhatozcelik.codechallenge.ui.home.MainScreen
+import com.ferhatozcelik.codechallenge.ui.recipe_add.RecipeAddScreen
+import com.ferhatozcelik.codechallenge.ui.recipe_add.RecipelViewModel
+import com.ferhatozcelik.codechallenge.ui.recipe_list.RecipeListScreen
 import com.ferhatozcelik.codechallenge.ui.login.LoginScreen
 
 @Composable
@@ -16,20 +16,22 @@ fun NavGraph(
     navController: NavHostController,
     sessionManager: UserSessionManager
 ) {
-    val viewModel: DetailViewModel = hiltViewModel()
-    val startDestination = if (sessionManager.isUserLoggedIn()) Screen.Main.route else Screen.Login.route
+    val viewModel: RecipelViewModel = hiltViewModel()
+    val startDestination = if (sessionManager.isUserLoggedIn())
+        Screen.RecipeList.route
+    else Screen.Login.route
 
     NavHost(
         navController = navController, startDestination = startDestination
     ) {
-        composable(Screen.Main.route) {
-            MainScreen(navController = navController, viewModel)
+        composable(Screen.RecipeList.route) {
+            RecipeListScreen(navController = navController, viewModel)
         }
         composable(Screen.Login.route) {
             LoginScreen(navController = navController, sessionManager = sessionManager)
         }
-        composable(Screen.Detail.route) {
-            DetailScreen(viewModel)
+        composable(Screen.RecipeDetail.route) {
+            RecipeAddScreen(viewModel)
         }
     }
 }
