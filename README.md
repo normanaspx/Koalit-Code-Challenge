@@ -8,9 +8,16 @@ Este proyecto es un fork de [jetpack-compose-template](https://github.com/ferhat
 - Injeccion de Dependencias (Hilt)
 - Jetpack Compose
 - SharedPreferences
-- Guardamos solo la ruta de la imagen en Room, la cargamos de internalStorage
 
 ## Caracteristicas
+
+- Login
+- Lista de recetas
+- Nueva receta
+- Detalle de receta
+- Manejo de permisos de almacenamiento en tiempo de ejecuccion
+- Almacenamiento de imagenes usando `MediaStore`
+- Dark mode support
 
 ### Login
 <img width="300" src="https://github.com/user-attachments/assets/d69bc08e-7442-4070-baea-8607aee47209" alt="Home"/>
