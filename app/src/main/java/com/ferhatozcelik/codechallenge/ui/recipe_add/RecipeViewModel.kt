@@ -21,7 +21,6 @@ class RecipeViewModel @Inject constructor(private val recipeRepository: RecipeRe
     fun setSelectedRecipe(recipe: Recipe) {
         _selectedRecipe.value = recipe
     }
-
     fun createRecipe(recipe: Recipe) {
         viewModelScope.launch {
             recipeRepository.insert(recipe)

@@ -159,7 +159,7 @@ fun RecipeCard(recipe: Recipe, onClick: () -> Unit) {
                         Brush.verticalGradient(
                             colors = listOf(
                                 Color.Transparent,
-                                Color.Black.copy(alpha = 0.6f)
+                                Color.Black.copy(alpha = 0.8f)
                             )
                         )
                     )

@@ -63,13 +63,13 @@ fun RecipeDetailScreen(viewModel: RecipeViewModel, navController: NavController)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp) // Ajusta la altura del degradado según sea necesario
+                        .height(100.dp)
                         .align(Alignment.BottomCenter)
                         .background(
                             Brush.verticalGradient(
                                 colors = listOf(
                                     Color.Transparent,
-                                    Color.Black.copy(alpha = 0.6f) // Ajusta la opacidad del color negro
+                                    Color.Black.copy(alpha = 0.6f)
                                 )
                             )
                         )
@@ -99,16 +99,13 @@ fun RecipeDetailScreen(viewModel: RecipeViewModel, navController: NavController)
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+                    Column { // Wrap description in a Column
                         Text(
                             text = "Descripción:",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
                         recipe?.let {
                             Text(
                                 text = it.description,

@@ -12,8 +12,6 @@ interface UserDao {
     @Query("SELECT * FROM User WHERE email = :email and password= :password")
     suspend fun getUserByEmail(email: String, password: String): User?
 
-
-    // Insertar un usuario, ignorando si ya existe (basado en la clave primaria)
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUser(user: User)
 }
