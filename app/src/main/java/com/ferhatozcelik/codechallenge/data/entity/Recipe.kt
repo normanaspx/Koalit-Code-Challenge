@@ -11,6 +11,7 @@ import kotlinx.parcelize.Parcelize
 data class Recipe(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val title: String,
+    val description: String,
     val prepTime: Int,
     val isFavorite: Boolean,
     val imageUri: String?

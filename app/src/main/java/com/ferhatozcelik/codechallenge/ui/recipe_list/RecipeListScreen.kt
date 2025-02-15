@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
@@ -21,17 +22,25 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.ferhatozcelik.codechallenge.data.entity.Recipe
 import com.ferhatozcelik.codechallenge.navigation.Screen
-import com.ferhatozcelik.codechallenge.ui.recipe_add.RecipelViewModel
+import com.ferhatozcelik.codechallenge.ui.recipe_add.RecipeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecipeListScreen(navController: NavHostController, viewModel: RecipelViewModel) {
+fun RecipeListScreen(navController: NavHostController, viewModel: RecipeViewModel) {
     val recipes by viewModel.allRecipes.observeAsState(emptyList())
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Lista de Recetas", style = MaterialTheme.typography.headlineMedium) }
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {  navController.navigate(Screen.RecipeAdd.route) },
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Agregar Receta")
+            }
         },
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
@@ -105,15 +114,4 @@ fun RecipeCard(recipe: Recipe, onClick: () -> Unit) {
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewRecipeListScreen() {
-    val recipes = listOf(
-        Recipe(2,"Pizza Casera", 40, true, null),
-        Recipe(3,"Ensalada César", 15, false, null),
-        Recipe(4,"Sopa de Tomate", 25, true, null) // Sin imagen
-    )
-    //HomeScreen(recipes, navController)
 }

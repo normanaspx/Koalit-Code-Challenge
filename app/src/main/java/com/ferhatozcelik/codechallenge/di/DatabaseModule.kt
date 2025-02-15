@@ -1,6 +1,7 @@
 package com.ferhatozcelik.codechallenge.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.ferhatozcelik.codechallenge.data.dao.RecipeDao
 import com.ferhatozcelik.codechallenge.data.dao.UserDao
@@ -8,6 +9,7 @@ import com.ferhatozcelik.codechallenge.data.local.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -17,8 +19,12 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(application: Application, callback: AppDatabase.Callback): AppDatabase {
-        return Room.databaseBuilder(application, AppDatabase::class.java, "local_database").fallbackToDestructiveMigration().addCallback(callback).build()
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            AppDatabase::class.java,
+            "recipe_database"
+        ).build()
     }
 
     @Provides

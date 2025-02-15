@@ -15,18 +15,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.KeyboardType
 import coil.compose.rememberImagePainter
 import com.ferhatozcelik.codechallenge.data.entity.Recipe
 import com.ferhatozcelik.codechallenge.ext.saveToStorage
-import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecipeAddScreen(viewModel: RecipelViewModel) {
+fun RecipeAddScreen(viewModel: RecipeViewModel) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var prepTime by remember { mutableStateOf("") }
@@ -132,6 +130,7 @@ fun RecipeAddScreen(viewModel: RecipelViewModel) {
                     onClick = {
                         val recipe = Recipe(
                             title = title,
+                            description = description,
                             prepTime = prepTime.toInt(),
                             isFavorite = isFavorite,
                             imageUri = imageUri.toString() // Guardamos la URI de la imagen

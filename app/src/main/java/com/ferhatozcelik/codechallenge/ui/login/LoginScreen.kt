@@ -83,7 +83,7 @@ fun LoginScreen(
             Text("Credenciales incorrectas", color = MaterialTheme.colorScheme.error)
         }else{
             sessionManager.saveUserSession(email, password)
-            navController.navigate(Screen.Main.route)
+            navController.navigate(Screen.RecipeList.route)
         }
 
         Button(
