@@ -27,7 +27,7 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
 
     private fun createUser() {
         viewModelScope.launch {
-            userRepository.insertUser("admin", "admin")
+            userRepository.insertUser("info@koalit.dev", "koalit123")
         }
     }
 }

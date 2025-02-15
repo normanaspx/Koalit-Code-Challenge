@@ -13,7 +13,9 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -57,6 +59,21 @@ fun RecipeDetailScreen(viewModel: RecipeViewModel, navController: NavController)
                         .height(300.dp),
                     contentScale = ContentScale.Crop
                 )
+                // Degradado en la parte inferior de la imagen
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp) // Ajusta la altura del degradado según sea necesario
+                        .align(Alignment.BottomCenter)
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.Black.copy(alpha = 0.6f) // Ajusta la opacidad del color negro
+                                )
+                            )
+                        )
+                )
                 recipe?.let {
                     Text(
                         text = it.title,
@@ -66,69 +83,63 @@ fun RecipeDetailScreen(viewModel: RecipeViewModel, navController: NavController)
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
                             .padding(8.dp)
-                            .background(Color.Black.copy(alpha = 0.7f), RoundedCornerShape(8.dp))
                             .padding(4.dp)
                     )
                 }
             }
 
-            // Detalles de la receta
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
-                    .background(Color.DarkGray, shape = RoundedCornerShape(12.dp))
+                    .background(Color.DarkGray, shape = RectangleShape)
                     .padding(16.dp)
             ) {
-                // Nombre de la receta y botón de favorito
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    recipe?.title?.let {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Text(
-                            text = it,
-                            fontSize = 24.sp,
+                            text = "Descripción:",
+                            fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White
                         )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        recipe?.let {
+                            Text(
+                                text = it.description,
+                                fontSize = 14.sp,
+                                color = Color.LightGray
+                            )
+                        }
                     }
                     Icon(
                         imageVector = if (recipe?.isFavorite == true) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                         contentDescription = "Favorito",
-                        tint = Color.Red
+                        tint = Color.Red,
+                        modifier = Modifier.size(24.dp)
                     )
-
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Ingredientes
-                Text(
-                    text = "Ingredientes:",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                recipe?.let {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
-                        text = it.description,
+                        text = "Tiempo de preparación: ${recipe?.prepTime} min",
                         fontSize = 14.sp,
-                        color = Color.LightGray
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
                     )
                 }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Tiempo de preparación
-                Text(
-                    text = "Tiempo de preparación: ${recipe?.prepTime} min",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
             }
+
         }
     }
 }

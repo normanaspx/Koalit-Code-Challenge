@@ -14,7 +14,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -26,8 +28,6 @@ import androidx.navigation.NavHostController
 import com.ferhatozcelik.codechallenge.data.local.UserSessionManager
 import com.ferhatozcelik.codechallenge.navigation.Screen
 
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
@@ -38,6 +38,7 @@ fun LoginScreen(
     var password by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
+    var showError by remember { mutableStateOf(false) }
     val loginState by viewModel.loginState
 
     Column(
@@ -79,11 +80,8 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (loginState == false) {
+        if (showError && loginState == false) {
             Text("Credenciales incorrectas", color = MaterialTheme.colorScheme.error)
-        }else{
-            sessionManager.saveUserSession(email, password)
-            navController.navigate(Screen.RecipeList.route)
         }
 
         Button(
@@ -92,11 +90,19 @@ fun LoginScreen(
                 passwordError = password.isEmpty()
                 if (!emailError && !passwordError) {
                     viewModel.login(email, password)
+                    showError = true
                 }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Iniciar Sesión")
+        }
+
+        LaunchedEffect(loginState) {
+            if (loginState == true) {
+                sessionManager.saveUserSession(email, password)
+                navController.navigate(Screen.RecipeList.route)
+            }
         }
     }
 }

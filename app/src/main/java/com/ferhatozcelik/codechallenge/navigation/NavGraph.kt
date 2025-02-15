@@ -18,7 +18,7 @@ fun NavGraph(
     sessionManager: UserSessionManager
 ) {
     val viewModel: RecipeViewModel = hiltViewModel()
-    val startDestination = if (sessionManager.isUserLoggedIn()) Screen.RecipeList.route else Screen.RecipeList.route
+    val startDestination = if (sessionManager.isUserLoggedIn()) Screen.RecipeList.route else Screen.Login.route
 
     NavHost(
         navController = navController, startDestination = startDestination
