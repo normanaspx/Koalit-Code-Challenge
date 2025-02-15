@@ -1,45 +1,44 @@
-# Jetpack Compose Template
+# Koalit Code Challenge
 
-Welcome to the Jetpack Compose Template! This template provides a structured starting point for building Android applications using the Jetpack Compose UI toolkit. Jetpack Compose simplifies UI development with a declarative approach, allowing you to create interactive and beautiful UIs with less code.
+Este proyecto es un fork de [jetpack-compose-template](https://github.com/ferhatozcelik/jetpack-compose-template) ¿Qué significa? Que este proyecto ya tiene listo un setup con Jetpack Compose, Room, Hilt y más. ¡Perfecto para ahorrar tiempo y empezar a codear!
 
-## Project Overview
+## Arquitectura/Componentes
+- MVVM
+- Room
+- Injeccion de Dependencias (Hilt)
+- Jetpack Compose
+- SharedPreferences
+- Guardamos solo la ruta de la imagen en Room, la cargamos de internalStorage
 
-This project demonstrates the use of Jetpack Compose to create a modern Android app with a clean and maintainable architecture.
+## Caracteristicas
 
-### Key Components
+### Login
+<img width="300" src="https://github.com/user-attachments/assets/d69bc08e-7442-4070-baea-8607aee47209" alt="Home"/>
 
-- **Jetpack Compose:** The modern UI toolkit for building native UIs.
-- **ViewModel:** Manage UI-related data and state using the ViewModel architecture component.
-- **Hilt:** Use Hilt for dependency injection, ensuring clean and modular code.
-- **Navigation Component:** Handle navigation between different screens seamlessly.
-- **Coroutines:** Utilize Kotlin's Coroutines for managing asynchronous tasks.
-- **Data Persistence:** Leverage Room for local data storage.
 
-## Getting Started
+### Listado de recetas
 
-1. **Clone the Repository:** `git clone https://github.com/ferhatozcelik/jetpack-compose-template.git`
-2. **Open in Android Studio:** Import the project into Android Studio.
-3. **Build and Run:** Build and run the app to see the Jetpack Compose magic in action.
+<img width="300" src="https://github.com/user-attachments/assets/544ddc53-1527-4ece-9489-678be06aab53" alt="Home"/>
 
-## Project Structure
+### Nueva Receta / Dark mode support
+<img width="300" src="https://github.com/user-attachments/assets/2b868335-c46b-4056-b2a1-bc8cfb9bb17f" alt="Home"/>
+<img width="300" src="https://github.com/user-attachments/assets/37c18d5d-2a51-4489-8480-a498bb9c692a" alt="Home"/>
 
-- `app` module: Contains the main application code.
-  - `src/main/java or src/main/kotlin`: Kotlin source code.
-  - `src/main/res`: Resources like layouts, strings, and drawables.
 
-## Customize and Extend
+### Ver Receta
 
-Feel free to customize and extend this template to match the requirements of your specific project. Experiment with different Composables, UI layouts, and navigation flows to create your unique app.
+<img width="300" src="https://github.com/user-attachments/assets/38e023bd-fa97-4834-98d3-b34613570f2c" alt="Home"/>
 
-## Author
+## Siguientes pasos / Mejoras
+- Tener una base de datos remota para almacenar las recetas.
+- Agregar los filtros (por favoritas, tiempo de preparacion).
+- Pasar los strings al archivo de strings.xml.
+- Pasar las dimensiones al archivo de dimens.xml
+- Manejar un placeholder para las recetas que no tengan imagenes.
+- Agregar boton de Logout.
 
-👤 Your Name
 
-- GitHub: [@ferhatozcelik](https://github.com/ferhatozcelik)
-- LinkedIn: [Ferhat OZCELIK](https://www.linkedin.com/in/ferhatozcelik/)
 
-## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
-If you find this template helpful, please consider giving it a ⭐️ on GitHub. Your support is greatly appreciated!
+
