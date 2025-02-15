@@ -1,45 +1,35 @@
-# Jetpack Compose Template
+# Koalit Code Challenge
 
-Welcome to the Jetpack Compose Template! This template provides a structured starting point for building Android applications using the Jetpack Compose UI toolkit. Jetpack Compose simplifies UI development with a declarative approach, allowing you to create interactive and beautiful UIs with less code.
+Este proyecto es un fork del genial [jetpack-compose-template](https://github.com/ferhatozcelik/jetpack-compose-template) de ferhatozcelik. ¿Qué significa?  Que ya tienes listo un setup con Jetpack Compose, Room, Hilt y más. ¡Perfecto para empezar a codear!
 
-## Project Overview
+## Arquitectura
+- MVVM
+- Room
+- Injeccion de Dependencias (Hilt)
+- Jetpack Compose
 
-This project demonstrates the use of Jetpack Compose to create a modern Android app with a clean and maintainable architecture.
+## Caracteristicas
 
-### Key Components
+### Login
 
-- **Jetpack Compose:** The modern UI toolkit for building native UIs.
-- **ViewModel:** Manage UI-related data and state using the ViewModel architecture component.
-- **Hilt:** Use Hilt for dependency injection, ensuring clean and modular code.
-- **Navigation Component:** Handle navigation between different screens seamlessly.
-- **Coroutines:** Utilize Kotlin's Coroutines for managing asynchronous tasks.
-- **Data Persistence:** Leverage Room for local data storage.
+<img width="300" src="https://github.com/user-attachments/assets/c27a53ae-1b79-489c-a6de-d038ace58fd7" alt="a"/>
 
-## Getting Started
+### Listado de recetas
 
-1. **Clone the Repository:** `git clone https://github.com/ferhatozcelik/jetpack-compose-template.git`
-2. **Open in Android Studio:** Import the project into Android Studio.
-3. **Build and Run:** Build and run the app to see the Jetpack Compose magic in action.
+<img width="300" src="https://github.com/user-attachments/assets/544ddc53-1527-4ece-9489-678be06aab53" alt="Home"/>
 
-## Project Structure
+### Nueva Receta
 
-- `app` module: Contains the main application code.
-  - `src/main/java or src/main/kotlin`: Kotlin source code.
-  - `src/main/res`: Resources like layouts, strings, and drawables.
 
-## Customize and Extend
+<img width="300" src="https://github.com/user-attachments/assets/c27a53ae-1b79-489c-a6de-d038ace58fd7" alt="a"/>
 
-Feel free to customize and extend this template to match the requirements of your specific project. Experiment with different Composables, UI layouts, and navigation flows to create your unique app.
+### Ver Receta
 
-## Author
+### Soporte Dark Mode
+<img width="300" src="https://github.com/user-attachments/assets/148e96a7-8f79-4782-be67-7691c273f704" alt="a"/>
 
-👤 Your Name
 
-- GitHub: [@ferhatozcelik](https://github.com/ferhatozcelik)
-- LinkedIn: [Ferhat OZCELIK](https://www.linkedin.com/in/ferhatozcelik/)
 
-## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
-If you find this template helpful, please consider giving it a ⭐️ on GitHub. Your support is greatly appreciated!
+
