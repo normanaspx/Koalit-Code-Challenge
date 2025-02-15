@@ -1,30 +1,31 @@
 package com.ferhatozcelik.codechallenge.ui.recipe_add
 
+import android.content.ContentValues
+import android.content.Context
 import android.net.Uri
+import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.text.input.KeyboardType
-import coil.compose.rememberImagePainter
+import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.ferhatozcelik.codechallenge.data.entity.Recipe
-import com.ferhatozcelik.codechallenge.ext.saveToStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.IOException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecipeAddScreen(viewModel: RecipeViewModel) {
+fun RecipeAddScreen(viewModel: RecipeViewModel, navController: NavController) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var prepTime by remember { mutableStateOf("") }
@@ -38,12 +39,16 @@ fun RecipeAddScreen(viewModel: RecipeViewModel) {
         }
     )
 
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Detalles de la receta") },
                 navigationIcon = {
-                    IconButton(onClick = { /* Acción para navegar atrás */ }) {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Atrás")
                     }
                 }
@@ -53,19 +58,17 @@ fun RecipeAddScreen(viewModel: RecipeViewModel) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp) // Padding alrededor de la pantalla
+                    .padding(16.dp)
                     .padding(paddingValues),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // Título
                 Text(
                     text = "Ingresa tu receta",
                     style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier.padding(bottom = 16.dp) // Espacio debajo del título
+                    modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                // Campo de texto para el título de la receta
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
@@ -74,31 +77,21 @@ fun RecipeAddScreen(viewModel: RecipeViewModel) {
                     singleLine = true
                 )
 
-                // Campo de texto para la descripción de la receta
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
                     label = { Text("Descripción") },
                     modifier = Modifier.fillMaxWidth(),
-                    maxLines = 3 // Permitir varias líneas para la descripción
+                    maxLines = 3
                 )
 
-                // Campo para el tiempo de preparación (en minutos)
                 OutlinedTextField(
                     value = prepTime,
                     onValueChange = { prepTime = it },
                     label = { Text("Tiempo de preparación (en minutos)") },
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { /* Acciones al completar la entrada del teclado */ }
-                    ),
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                // Opción para marcar como favorita
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(text = "Marcar como favorita")
                     Spacer(modifier = Modifier.width(8.dp))
@@ -108,7 +101,6 @@ fun RecipeAddScreen(viewModel: RecipeViewModel) {
                     )
                 }
 
-                // Botón para seleccionar imagen
                 Button(
                     onClick = { launcher.launch("image/*") },
                     modifier = Modifier.fillMaxWidth()
@@ -116,26 +108,26 @@ fun RecipeAddScreen(viewModel: RecipeViewModel) {
                     Text("Seleccionar imagen")
                 }
 
-                // Mostrar la imagen seleccionada (si existe)
                 imageUri?.let {
-                    Image(
-                        painter = rememberImagePainter(it),
+                    AsyncImage(
+                        model = it,
                         contentDescription = "Imagen seleccionada",
-                        modifier = Modifier.fillMaxWidth().height(200.dp) // Ajusta el tamaño de la imagen
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
                     )
                 }
 
-                // Botón para guardar la receta
                 Button(
                     onClick = {
+                        val savedUri = imageUri?.let { saveImageToGallery(context, it) }
                         val recipe = Recipe(
                             title = title,
                             description = description,
                             prepTime = prepTime.toInt(),
                             isFavorite = isFavorite,
-                            imageUri = imageUri.toString() // Guardamos la URI de la imagen
+                            imageUri = savedUri.toString()
                         )
-                        imageUri?.saveToStorage()
                         viewModel.createRecipe(recipe = recipe)
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -147,4 +139,26 @@ fun RecipeAddScreen(viewModel: RecipeViewModel) {
     )
 }
 
+fun saveImageToGallery(context: Context, uri: Uri): Uri? {
+    val contentResolver = context.contentResolver
+    val contentValues = ContentValues().apply {
+        put(MediaStore.MediaColumns.DISPLAY_NAME, "recipe_${System.currentTimeMillis()}.jpg")
+        put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+        put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/Recipes")
+    }
 
+    return try {
+        val imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        imageUri?.let {
+            val inputStream = contentResolver.openInputStream(uri)
+            val outputStream = contentResolver.openOutputStream(it)
+            inputStream?.copyTo(outputStream!!)
+            inputStream?.close()
+            outputStream?.close()
+        }
+        imageUri
+    } catch (e: IOException) {
+        e.printStackTrace()
+        null
+    }
+}

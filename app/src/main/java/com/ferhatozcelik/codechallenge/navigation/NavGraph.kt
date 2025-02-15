@@ -18,7 +18,7 @@ fun NavGraph(
     sessionManager: UserSessionManager
 ) {
     val viewModel: RecipeViewModel = hiltViewModel()
-    val startDestination = if (sessionManager.isUserLoggedIn()) Screen.RecipeList.route else Screen.Login.route
+    val startDestination = if (sessionManager.isUserLoggedIn()) Screen.RecipeList.route else Screen.RecipeList.route
 
     NavHost(
         navController = navController, startDestination = startDestination
@@ -30,7 +30,7 @@ fun NavGraph(
             RecipeListScreen(navController = navController, viewModel)
         }
         composable(Screen.RecipeAdd.route) {
-            RecipeAddScreen(viewModel)
+            RecipeAddScreen(viewModel, navController)
         }
         composable(Screen.RecipeDetail.route) {
             RecipeDetailScreen(viewModel, navController)
